@@ -13,7 +13,7 @@ export const Form = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#F1c',
+  placeholderTextColor: '#122a4f',
 })`
   flex: 1;
   height: 40px;
@@ -74,6 +74,17 @@ export const ProfileButton = styled(RectButton)`
   justify-content: center;
   height: 36px;
 `;
+
+export const ProfileDeleteButton = styled(RectButton)`
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 0 36px;
+  background: #f1c;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+`;
+
 export const ProfileButtonText = styled.Text`
   font-size: 14px;
   font-weight: bold;

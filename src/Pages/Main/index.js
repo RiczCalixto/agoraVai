@@ -13,6 +13,7 @@ import {
   Name,
   Bio,
   ProfileButton,
+  ProfileDeleteButton,
   ProfileButtonText,
 } from './styles';
 import api from '../../services/api';
@@ -65,6 +66,17 @@ export default class Main extends Component {
     Keyboard.dismiss();
   };
 
+  handleDeleteUser = selectedUser => {
+    const {users} = this.state;
+    const filteredUser = users.filter(user => {
+      return user.login !== selectedUser.login;
+    });
+    this.setState({
+      users: [...filteredUser],
+    });
+    AsyncStorage.setItem('users', JSON.stringify(filteredUser));
+  };
+
   handleNavigate = user => {
     const {navigation} = this.props;
     navigation.navigate('User', {user});
@@ -96,15 +108,19 @@ export default class Main extends Component {
         <List
           data={users}
           keyExtractor={user => user.login}
-          renderItem={({item}) => (
+          renderItem={({item: selectedUser}) => (
             <User>
-              <Avatar source={{uri: item.avatar}} />
-              <Name>{item.name}</Name>
-              <Bio>{item.bio}</Bio>
+              <Avatar source={{uri: selectedUser.avatar}} />
+              <Name>{selectedUser.name}</Name>
+              <Bio>{selectedUser.bio}</Bio>
 
-              <ProfileButton onPress={() => this.handleNavigate(item)}>
+              <ProfileButton onPress={() => this.handleNavigate(selectedUser)}>
                 <ProfileButtonText>Ver Perfil</ProfileButtonText>
               </ProfileButton>
+              <ProfileDeleteButton
+                onPress={() => this.handleDeleteUser(selectedUser)}>
+                <ProfileButtonText>Deletar</ProfileButtonText>
+              </ProfileDeleteButton>
             </User>
           )}
         />
